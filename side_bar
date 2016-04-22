@@ -1,0 +1,123 @@
+################################################################################
+#                             conky  configuration                             #
+# cooling_rc                                                                   #
+# by CytoDev, wolfemm                                                          #
+#==============================================================================#
+#                                   Settings                                   #
+#------------------------------------------------------------------------------#
+alignment top_right
+background yes
+cpu_avg_samples 1
+default_color 0096FA
+default_bar_size 299 8
+default_outline_color FA9600
+default_shade_color 000000
+double_buffer yes
+draw_borders no
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+gap_x 32
+gap_y 32
+minimum_size 280 5
+maximum_width 300
+text_buffer_size 2048
+no_buffers yes
+override_utf8_locale no
+own_window yes
+own_window_argb_value 180
+own_window_argb_visual yes
+own_window_transparent yes
+own_window_type desktop
+pad_percents 3
+total_run_times 0
+update_interval 1
+use_xft yes
+xftalpha 1
+xftfont monospace:size=10
+
+#------------------------------------------------------------------------------#
+#                                   Templates                                  #
+#------------------------------------------------------------------------------#
+template0 /dev/\1: ${diskio \1} ${diskio_read \1} ${diskio_write \1}
+template1 ${cpugraph cpu\1 25,150} ${voffset 10} ${freq_g \1}GHz ${voffset -25}${alignr}${cpu cpu\1}%
+template2 \1${alignc}${fs_used \2} / ${fs_size \2}${alignr}${fs_used_perc \2}%\n${fs_bar /tmp}
+
+#------------------------------------------------------------------------------#
+#                                    Output                                    #
+################################################################################
+
+TEXT
+################################################################################
+#                                    SYSTEM                                    #
+################################################################################
+${color FFFFFF}SYSTEM ${hr}${color}
+
+UPTIME:${alignr}${uptime_short}
+ENTROPY:${alignr}${entropy_perc}%
+
+################################################################################
+#                                   COOLING                                    #
+################################################################################
+${color FFFFFF}COOLING ${hr}${color}
+
+${acpifan}
+
+################################################################################
+#                                     I/O                                      #
+################################################################################
+${color FFFFFF}IO ${hr}${color}
+
+${template0 sda}
+${template0 sdb}
+
+################################################################################
+#                                    STORAGE                                   #
+################################################################################
+${color FFFFFF}STORAGE ${hr}${color }
+
+${if_mounted /}${template2 root /}${endif}
+${if_mounted /home}${template2 home /home}${endif}
+${if_mounted /usr}${template2 usr /usr}${endif}
+${if_mounted /tmp}${template2 tmp /tmp}${endif}
+
+################################################################################
+#                                     LOAD                                     #
+################################################################################
+${color FFFFFF}LOAD ${hr}${color}
+
+${freq_g}GHz / ${cpu cpu0}% / ${exec sensors | grep 'Physical id 0' | cut -c18-21}C
+${cpugraph cpu0}
+
+${template1 1}
+${template1 2}
+${template1 3}
+${template1 4}
+#GPU:   ${exec nvidia-smi -q -g 0 2>&1 | grep -A 2 -i utilization | grep -i gpu | tail -1 | awk '{printf "% 3d", $3}'}% ${execbar nvidia-smi -q -g 0 2>&1 | grep -A 2 -i utilization | grep -i gpu | tail -1 | awk '{printf "% 3d", $3}'}${exec nvidia-smi -q -g 0 2>&1 | grep -A 2 -i '^[[:space:]]\{4\}Clocks$' | grep -i Graphics | tail -1 | awk '{printf "% 5d%s", $3, $4}'}
+
+################################################################################
+#                                    MEMORY                                    #
+################################################################################
+${color FFFFFF}MEMORY ${hr}${color}
+
+RAM ${alignc} ${mem} / ${memmax} ${alignr} ${memperc}%
+${membar}
+#VRAM ${alignc} ${exec nvidia-smi -q -g 0 2>&1 | grep -A 2 -i "FB Memory Usage" | grep -i Used | tail -1 | awk '{print $3}'}MiB / ${exec nvidia-smi -q -g 0 2>&1 | grep -A 2 -i "FB Memory Usage" | grep -i Total | tail -1 | awk '{print $3}'}MiB ${alignr} ${exec nvidia-smi -q -g 0 2>&1 | grep -A 2 -i utilization | grep -i gpu | tail -1 | awk '{printf "% 3d", $3}'}%
+#${execbar nvidia-smi -q -g 0 2>&1 | grep -A 2 -i utilization | grep -i gpu | tail -1 | awk '{printf "% 3d", $3}'}
+SWAP ${alignc} ${swap} / ${swapmax} ${alignr} ${swapperc}%
+${swapbar}
+
+################################################################################
+#                                   NETWORK                                    #
+################################################################################
+${color FFFFFF}NETWORK ${hr}${color}
+
+Network:${alignr}${wireless_essid wlan0}
+Signal:${alignr}${wireless_link_qual_perc wlan0}%
+Total Down:${alignr}${totaldown wlan0}
+Total Up:${alignr}${totalup wlan0}
+
+Down: ${alignr}${downspeed wlan0}
+${color 000000}${downspeedgraph wlan0 0096FA 0096FA}${color}
+Up: ${alignr}${upspeed wlan0}
+${color 000000}${upspeedgraph wlan0 0096FA 0096FA}${color}

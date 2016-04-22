@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=WolfemmConky
+GenericName=WolfemmConky
+Comment=Start conky
+Categories=Utility;System;
+Exec=bash "/home/mike/conkyconf/conky_launcher.sh"
+Terminal=false
+StartupNotify=false
+Type=Application

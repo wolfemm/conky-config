@@ -1,0 +1,51 @@
+################################################################################
+#                             conky  configuration                             #
+# time_rc                                                                      #
+# by wolfemm                                                                   #
+#==============================================================================#
+#                                   Settings                                   #
+#------------------------------------------------------------------------------#
+alignment top_right
+background yes
+default_color ffffff
+default_outline_color FA9600
+default_shade_color 000000
+double_buffer yes
+draw_borders no
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+gap_x 0
+gap_y 32
+minimum_size 1920 1080
+maximum_width 1920
+no_buffers yes
+override_utf8_locale no
+own_window yes
+own_window_argb_value 180
+own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_transparent yes
+own_window_type desktop
+text_buffer_size 2048
+total_run_times 0
+update_interval 1
+use_xft yes
+xftalpha 1
+xftfont monospace:size=32
+
+#------------------------------------------------------------------------------#
+#                                   Templates                                  #
+#------------------------------------------------------------------------------#
+template0 ${alignc}${font monospace:size=12}${voffset 26}${tztime \1 %Z}${voffset -24}${font} ${tztime \1 %m.%d %H:%M:%S}
+
+#------------------------------------------------------------------------------#
+#                                    Output                                    #
+################################################################################
+
+TEXT
+${template0 America/Los_Angeles}
+
+${template0 UTC}
+
+${template0 Asia/Tokyo}
