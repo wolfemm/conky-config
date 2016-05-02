@@ -59,10 +59,10 @@ ENTROPY:${alignr}${entropy_perc}%
 ################################################################################
 #                                   COOLING                                    #
 ################################################################################
-${color FFFFFF}COOLING ${hr}${color}
-
-${acpifan}
-
+#${color FFFFFF}COOLING ${hr}${color}
+#
+#${acpifan}
+#
 ################################################################################
 #                                     I/O                                      #
 ################################################################################
@@ -79,6 +79,7 @@ ${color FFFFFF}STORAGE ${hr}${color }
 ${if_mounted /}${template2 root /}${endif}
 ${if_mounted /home}${template2 home /home}${endif}
 ${if_mounted /usr}${template2 usr /usr}${endif}
+${if_mounted /var}${template2 var /var}${endif}
 ${if_mounted /tmp}${template2 tmp /tmp}${endif}
 
 ################################################################################
@@ -112,7 +113,7 @@ ${swapbar}
 ################################################################################
 ${color FFFFFF}NETWORK ${hr}${color}
 
-Network:${alignr}${wireless_essid wlan0}
+#Network:${alignr}${wireless_essid wlan0}
 Signal:${alignr}${wireless_link_qual_perc wlan0}%
 Total Down:${alignr}${totaldown wlan0}
 Total Up:${alignr}${totalup wlan0}
